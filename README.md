@@ -9,7 +9,7 @@ This project demonstrates the end-to-end data engineering process on real-time s
 - **Broker**: Kafka on AWS EC2 handles the message brokering.
 - **Consumer**: The data is consumed by AWS services and processed for storage and querying.
 
-![Architecture](./path-to-your-architecture-diagram)
+
 
 ## Technologies Used
 - **Programming Language**: Python
@@ -20,7 +20,6 @@ This project demonstrates the end-to-end data engineering process on real-time s
   - **Glue Crawler**: Extracts metadata and catalogs data.
   - **Glue Data Catalog**: Maintains a schema of the data.
   - **Athena**: Allows querying of the data using SQL.
-- **Data Source**: CSV dataset ([Dataset Link](https://github.com/darshilparmar/stock-market-kafka-data-engineering-project/blob/main/indexProcessed.csv))
 
 ## Workflow
 1. **Data Simulation**: A Python app simulates real-time stock market data using the dataset and produces messages to a Kafka topic.
@@ -61,21 +60,6 @@ This project demonstrates the end-to-end data engineering process on real-time s
    pip install kafka-python boto3
    ```
 
-2. **Configure Producer**:
-   - Use the Python script to simulate stock market data and send it to Kafka. Here's a simplified snippet:
-   ```python
-   from kafka import KafkaProducer
-   import json
-   import csv
-
-   producer = KafkaProducer(bootstrap_servers='localhost:9092', value_serializer=lambda v: json.dumps(v).encode('utf-8'))
-
-   with open('indexProcessed.csv', mode='r') as file:
-       reader = csv.DictReader(file)
-       for row in reader:
-           producer.send('stock_topic', value=row)
-   ```
-
 ### AWS S3 Setup
 1. **Create an S3 Bucket** to store the stock market data.
 2. **Configure AWS CLI** with your credentials:
@@ -97,9 +81,6 @@ This project demonstrates the end-to-end data engineering process on real-time s
 3. Check the **AWS S3 bucket** for incoming data.
 4. Use **AWS Glue Crawler** to catalog the data.
 5. Query the data in **Athena**.
-
-## Dataset
-The dataset used in this project simulates stock market data and is available [here](https://github.com/darshilparmar/stock-market-kafka-data-engineering-project/blob/main/indexProcessed.csv).
 
 ## Future Enhancements
 - Add more complex transformations to the data pipeline.
