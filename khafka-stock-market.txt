@@ -1,0 +1,76 @@
+khafka-stock-market
+
+
+in windows power shell 
+
+first - cd path (project path)
+second - aws ssh path
+
+
+start zookepper server and kafka server in 2 diff shell 
+
+zookeeper
+ *first - cd path (project path)
+ *second - aws ssh path
+ *download in shell  (wget https://archive.apache.org/dist/kafka/3.3.1/kafka_2.12-3.3.1.tgz)
+ *cd kafka_2.12-3.3.1 (in shell)
+ *bin/zookeeper-server-start.sh config/zookeeper.properties  (cmd to start a server) 
+
+kafka 
+*first - cd path (project path)
+*second - aws ssh path
+*export KAFKA_HEAP_OPTS="-Xmx256M -Xms128M"  (refer this cmd in online)
+* cd kafka_2.12-3.3.1 (in shell)  
+*bin/kafka-server-start.sh config/server.properties (cmd to start a server) 
+
+
+----------Do a "sudo nano config/server.properties" - change ADVERTISED_LISTENERS to public ip of the EC2 instance-----
+
+after this command paste the public ipv4 address instead of your host name 
+
+
+
+
+open another shell (to create a topic (producer))
+ *first - cd path (project path)
+ *second - aws ssh path
+ *cd kafka_2.12-3.3.1
+
+--------------------------------------------------------cmd same shell---------------------------------------------------------------
+Create the topic:
+-----------------------------
+Duplicate the session & enter in a new console --
+cd kafka_2.12-3.3.1
+bin/kafka-topics.sh --create --topic demo_test --bootstrap-server 54.159.255.75:9092 --replication-factor 1 --partitions 1
+
+Start Producer:
+--------------------------
+bin/kafka-console-producer.sh --topic demo_test --bootstrap-server 54.159.255.75:9092 
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+
+open new shell 
+ *first - cd path (project path)
+ *second - aws ssh path
+
+Start Consumer:
+-------------------------
+Duplicate the session & enter in a new console --
+cd kafka_2.12-3.3.1
+bin/kafka-console-consumer.sh --topic demo_test --bootstrap-server 54.159.255.75:9092
+
+
+-----------------------------new shell -----------------------------------------------------
+aws confifure
+paste access key id 
+paste secrete access key 
+
+
+
+----------------------------------pass the data from local machine to s3 bucket ,in aws the data will stored in objects in s3 bucket---
+
+----------------------------------aws glue -> crawler --------------------------------------------------------------------
+			create crawler
+			add data source
+			create data base
